@@ -55,22 +55,24 @@ else
     sudo apt-get update && sudo apt-get install -y git
 fi
 
-# 4. Clone the specific branch
+# 4. Clone the specific branch into a generic folder
 echo "🏎️  Cloning Codebase ($BRANCH)..."
-git clone -b "$BRANCH" "$REPO_URL"
+git clone -b "$BRANCH" "$REPO_URL" repo_bundle
 
 # 5. Execute the core deployment script
-# Use absolute paths to avoid any "not found" ambiguities
-DEPLOY_PATH="$INSTALL_DIR/$APP_NAME/deploy.sh"
+# Using the standardized generic folder name
+DEPLOY_PATH="$INSTALL_DIR/repo_bundle/deploy.sh"
 
 if [ ! -f "$DEPLOY_PATH" ]; then
     echo "❌ Error: Could not find deploy.sh at $DEPLOY_PATH"
+    echo "📂 Directory contents:"
+    ls -R "$INSTALL_DIR"
     exit 1
 fi
 
 echo "🚀 Launching Deployment Engine..."
-echo "📍 Transitioning to: $INSTALL_DIR/$APP_NAME"
-cd "$INSTALL_DIR/$APP_NAME"
+echo "📍 Transitioning to: $INSTALL_DIR/repo_bundle"
+cd "$INSTALL_DIR/repo_bundle"
 
 # Ensure deploy script is executable
 chmod +x deploy.sh

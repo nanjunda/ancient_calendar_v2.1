@@ -7,7 +7,7 @@
 # Exit on any error
 set -e
 
-REPO_URL="https://github.com/nanjunda/gregorian_to_ancient_calendars.git"
+REPO_URL="https://github.com/nanjunda/ancient_calendar_v2.1.git"
 INSTALL_BASE="/tmp"
 INSTALL_DIR="$INSTALL_BASE/ancient_calendars_v2.0"
 APP_NAME="gregorian_to_ancient_calendars"

@@ -10,7 +10,7 @@ set -e
 REPO_URL="https://github.com/nanjunda/ancient_calendar_v2.1.git"
 INSTALL_BASE="/tmp"
 INSTALL_DIR="$INSTALL_BASE/ancient_calendars_v2.0"
-APP_NAME="gregorian_to_ancient_calendars"
+APP_NAME="ancient_calendar_v2.1"
 # Default to v2.0 main branch
 BRANCH=${1:-"main"}
 

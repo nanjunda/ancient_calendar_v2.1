@@ -95,6 +95,8 @@ sudo GOOGLE_API_KEY="$GOOGLE_API_KEY" \
      bash ./deploy.sh
 
 
+# 7. Final Success Message
+PUBLIC_IP=$(curl -s ifconfig.me || echo "localhost")
 echo "================================================================="
 echo "✅ SUCCESS! Ancient Calendars v2.0 (Headless Edition) is now installed."
 echo "🌍 Access at: https://$PUBLIC_IP:58921"

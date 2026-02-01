@@ -62,9 +62,45 @@ def calculate_masa_name(sun_lon_at_nm, lang='EN'):
     }
     return MASAS[lang][masa_mapping[rasi_index]]
 
-def calculate_masa_samvatsara(year, sun_lon_at_nm, sun_lon_now, lang='EN'):
-    masa_name = calculate_masa_name(sun_lon_at_nm, lang)
-    samvat_index = (year - 1987) % 60
+def calculate_masa_samvatsara(local_dt, sun_lon_at_nm, sun_lon_now, lang='EN'):
+    """
+    Calculates Masa and Samvatsara name.
+    Samvatsara changes at Ugadi (Chaitra Shukla Pratipada).
+    """
+    # 1. Determine Masa Name
+    rasi_index = int(sun_lon_at_nm / 30)
+    masa_mapping = {
+        11: 0, # Meena -> Chaitra
+        0: 1,  # Mesha -> Vaishakha
+        1: 2,  # Vrishabha -> Jyeshtha
+        2: 3,  # Mithuna -> Ashadha
+        3: 4,  # Karka -> Shravana
+        4: 5,  # Simha -> Bhadrapada
+        5: 6,  # Kanya -> Ashvin
+        6: 7,  # Tula -> Kartika
+        7: 8,  # Vrishchika -> Margashirsha
+        8: 9,  # Dhanu -> Pausha
+        9: 10, # Makara -> Magha
+        10: 11 # Kumbha -> Phalguna
+    }
+    masa_idx = masa_mapping[rasi_index]
+    masa_name = MASAS[lang][masa_idx]
+    
+    # 2. Determine Samvatsara Index
+    # Base year 1987 was Prabhava (Index 0) at Ugadi.
+    year = local_dt.year
+    
+    # If we are in the last few months of the Vedic year (Pausha-Phalguna) 
+    # but the Gregorian year has already rolled over (Jan-Apr), 
+    # we are still in the Samvatsara of the PREVIOUS Gregorian year.
+    if masa_idx >= 9 and local_dt.month <= 4:
+        effective_year = year - 1
+    # Conversely, if Ugadi happens early (e.g. in March) and we are in Chaitra,
+    # the new Samvatsara has already started even if it's "early" Gregorian.
+    else:
+        effective_year = year
+
+    samvat_index = (effective_year - 1987) % 60
     return masa_name, SAMVATSARAS[lang][samvat_index]
 
 def calculate_saka_year(date_obj):

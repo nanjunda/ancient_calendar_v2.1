@@ -2,7 +2,7 @@ import argparse
 from datetime import datetime
 import pytz
 from utils.location import get_location_details
-from utils.astronomy import get_sidereal_longitude, get_sunrise_sunset, sun, moon
+from utils.astronomy import get_sidereal_longitude, get_sunrise_sunset, sun, moon, get_previous_new_moon
 from panchanga.calculations import (
     calculate_vara, calculate_tithi, calculate_nakshatra, 
     calculate_yoga, calculate_karana, calculate_masa_samvatsara,
@@ -41,10 +41,15 @@ def main():
         # 4. Calculate Panchanga Elements
         vara = calculate_vara(local_dt, sunrise)
         tithi, paksha = calculate_tithi(sun_lon, moon_lon)
-        nakshatra = calculate_nakshatra(moon_lon)
+        nakshatra, nak_pada = calculate_nakshatra(moon_lon)
         yoga = calculate_yoga(sun_lon, moon_lon)
         karana_num = calculate_karana(sun_lon, moon_lon)
-        masa, samvatsara = calculate_masa_samvatsara(local_dt.year, sun_lon)
+        
+        # New Moon for Masa/Samvatsara
+        prev_nm_utc = get_previous_new_moon(utc_dt)
+        sun_lon_at_nm = get_sidereal_longitude(prev_nm_utc, sun)
+        
+        masa, samvatsara = calculate_masa_samvatsara(local_dt, sun_lon_at_nm, sun_lon)
 
         # 5. Display Results
         print("\n" + "="*40)

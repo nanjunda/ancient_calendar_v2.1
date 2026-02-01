@@ -30,7 +30,7 @@ def debug_check():
     print(f"Diff (Moon-Sun): {(moon_lon - sun_lon) % 360}")
 
     tithi, paksha = calculate_tithi(sun_lon, moon_lon)
-    masa, samvatsara = calculate_masa_samvatsara(dt_local.year, sun_lon_at_nm, sun_lon)
+    masa, samvatsara = calculate_masa_samvatsara(dt_local, sun_lon_at_nm, sun_lon)
     
     print(f"Tithi Boundary Gap: {((moon_lon - sun_lon) % 360) / 12}")
     print(f"Result -> Masa: {masa}, Paksha: {paksha}, Tithi: {tithi}")

@@ -47,7 +47,7 @@ class PanchangaEngine(BaseCalendar):
         nakshatra, nak_pada = calculate_nakshatra(moon_lon, lang=lang)
         yoga = calculate_yoga(sun_lon, moon_lon, lang=lang)
         karana_num = calculate_karana(sun_lon, moon_lon)
-        masa, samvatsara = calculate_masa_samvatsara(local_dt.year, sun_lon_at_nm, sun_lon, lang=lang)
+        masa, samvatsara = calculate_masa_samvatsara(local_dt, sun_lon_at_nm, sun_lon, lang=lang)
         
         # 5. Calculate Rashi and Lagna (v3.2)
         rashi_idx = get_rashi(moon_lon)

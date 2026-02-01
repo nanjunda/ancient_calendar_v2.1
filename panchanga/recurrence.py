@@ -21,7 +21,7 @@ def find_recurrences(base_dt, loc_details, num_entries=20, lang='EN'):
     # Target Masa must be determined at the New Moon preceding the original event
     prev_nm_utc = get_previous_new_moon(utc_dt)
     sun_lon_at_nm = get_sidereal_longitude(prev_nm_utc, sun)
-    target_masa, _ = calculate_masa_samvatsara(base_dt.year, sun_lon_at_nm, sun_lon, lang=lang)
+    target_masa, _ = calculate_masa_samvatsara(base_dt, sun_lon_at_nm, sun_lon, lang=lang)
     
     now = datetime.now(pytz.utc)
     current_year = now.year
@@ -59,7 +59,7 @@ def find_recurrences(base_dt, loc_details, num_entries=20, lang='EN'):
             tithi, paksha = calculate_tithi(s_lon, m_lon, lang=lang)
             curr_nm_utc = get_previous_new_moon(dt_utc)
             s_lon_at_nm = get_sidereal_longitude(curr_nm_utc, sun)
-            masa, samvatsara = calculate_masa_samvatsara(dt_local.year, s_lon_at_nm, s_lon, lang=lang)
+            masa, samvatsara = calculate_masa_samvatsara(dt_local, s_lon_at_nm, s_lon, lang=lang)
             
             if tithi == target_tithi and paksha == target_paksha and masa == target_masa:
                 # Basic protection against double-counting the same day

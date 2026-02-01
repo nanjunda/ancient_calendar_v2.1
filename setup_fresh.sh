@@ -11,8 +11,8 @@ REPO_URL="https://github.com/nanjunda/ancient_calendar_v2.1.git"
 INSTALL_BASE="/tmp"
 INSTALL_DIR="$INSTALL_BASE/ancient_calendars_v2.0"
 APP_NAME="ancient_calendar_v2.1"
-# Default to v2.0 main branch
-BRANCH=${1:-"main"}
+# Default to the current stable release branch
+BRANCH=${1:-"ancient_calendar_v2.1"}
 
 echo "🌌 Starting Fresh Installation of Hindu Panchanga..."
 echo "🌿 Target Branch: $BRANCH"

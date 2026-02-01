@@ -65,8 +65,8 @@ sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 # 2. Relocate Application to /opt
 echo "🚚 Moving application to $DEPLOY_DIR..."
 sudo mkdir -p $DEPLOY_DIR
-# Use rsync for clean copy
-sudo rsync -av --exclude='venv' --exclude='.git' --exclude='__pycache__' "$SOURCE_DIR/" "$DEPLOY_DIR/"
+# Use rsync for clean copy with --delete to purge stale artifacts
+sudo rsync -av --delete --exclude='venv' --exclude='.git' --exclude='__pycache__' "$SOURCE_DIR/" "$DEPLOY_DIR/"
 
 # 3. Handle AI Configuration
 echo "🤖 AI Engine Configuration (v2.0 Architectural Sync):"

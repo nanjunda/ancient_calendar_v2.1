@@ -133,7 +133,7 @@ class MayanEngine(BaseCalendar):
 
     def get_ai_context(self, calculated_data):
         """
-        Formats data for the AI Maestro.
+        Formats data for the Lead Educator.
         """
         return f"""
         Mayan Calendar Correlation Data:
@@ -167,6 +167,7 @@ class MayanEngine(BaseCalendar):
 
         Phase IV: Archaeoastronomy & Planetary Resonances
         - Explain the 584-day Synodic period of Venus and how 5 Venus cycles equal 8 Solar years.
+        - Detail the mathematical precision: 5 × 584 = 2920 days, and 8 × 365 = 2920 days. This exact resonance allowed the Maya to predict Venus's heliacal rise with astounding accuracy.
         - Connect the math to the "Dresden Codex".
         - **MANDATORY**: You MUST insert the tag `[[RENDER:VENUS_MARS_ALIGNMENT]]` to show the pentagram orbit.
 

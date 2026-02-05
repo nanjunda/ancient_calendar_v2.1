@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3-Celestial Highlight Debug</title>
+    <!-- Using same imports as test_d3_celestial.html for consistency -->
+    <script src="https://cdn.jsdelivr.net/gh/ofrohn/d3-celestial/lib/d3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/ofrohn/d3-celestial/lib/d3.geo.projection.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/ofrohn/d3-celestial/celestial.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ofrohn/d3-celestial/celestial.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #000;
+            color: #fff;
+            font-family: Arial;
+        }
+
+        #celestial-map {
+            width: 100%;
+            height: 600px;
+            position: relative;
+            border: 2px solid #333;
+        }
+
+        .controls {
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            background: #ff9100;
+            border: none;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #ffa500;
+        }
+
+        #debug-output {
+            background: #111;
+            padding: 10px;
+            margin-top: 20px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🔬 D3-Celestial Highlight Debug Tool</h1>
+
+    <div class="controls">
+        <button onclick="testStar()">Test Star (Hamal)</button>
+        <button onclick="testConstellation()">Test Constellation (Leo)</button>
+        <button onclick="clearHighlights()">Clear Highlights</button>
+        <button onclick="inspectDOM()">Inspect DOM</button>
+    </div>
+
+    <div id="celestial-map"></div>
+
+    <div id="debug-output">
+        <strong>Debug Console:</strong><br>
+        Waiting for user action...
+    </div>
+
+    <script>
+        let debugLog = [];
+
+        function log(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            debugLog.push(`[${timestamp}] ${message}`);
+            document.getElementById('debug-output').innerHTML =
+                '<strong>Debug Console:</strong><br>' + debugLog.slice(-20).join('<br>');
+            console.log(message);
+        }
+
+        // Initialize D3-Celestial
+        log('Initializing D3-Celestial...');
+        Celestial.display({
+            container: "celestial-map",
+            datapath: "https://cdn.jsdelivr.net/gh/ofrohn/d3-celestial/data/",
+            projection: "orthographic",
+            transform: "equatorial",
+            controls: false,
+            interactive: true,
+            background: { fill: "#000", opacity: 1 },
+            stars: {
+                show: true,
+                limit: 6,
+                names: true,
+                proper: true,
+                style: { fill: "#ffffff", opacity: 1 }
+            },
+            constellations: {
+                show: true,
+                names: true,
+                lines: true,
+                linestyle: { stroke: "#58a6ff", width: 1.5, opacity: 0.7 },
+                bounds: true,
+                boundstyle: { stroke: "#ff7b72", width: 1, opacity: 0.5, dash: [2, 4] }
+            },
+            planets: { show: true },
+            grid: { show: true, opacity: 0.1 }
+        });
+        log('D3-Celestial initialized');
+
+        const COORDS = {
+            "Hamal": [31.02, 23.46],
+            "Leo": [160, 15]
+        };
+
+        function addHighlight(coords, name, isRashi) {
+            log(`Adding highlight for ${name} at [${coords[0]}, ${coords[1]}]`);
+
+            const mapContainer = document.getElementById('celestial-map');
+            log(`Map container found: ${!!mapContainer}`);
+
+            // Create SVG overlay
+            let highlightLayer = d3.select("#highlight-layer");
+            if (highlightLayer.empty()) {
+                log('Creating new highlight layer SVG');
+                highlightLayer = d3.select(mapContainer).append("svg")
+                    .attr("id", "highlight-layer")
+                    .style("position", "absolute")
+                    .style("top", 0)
+                    .style("left", 0)
+                    .style("width", "100%")
+                    .style("height", "100%")
+                    .style("pointer-events", "none")
+                    .style("z-index", "1001");
+                log('Highlight layer created');
+            } else {
+                log('Highlight layer already exists');
+            }
+
+            // Test projection immediately
+            const initialProj = Celestial.mapProjection(coords);
+            log(`Initial Projection Check for [${coords}]: ${initialProj ? `[${initialProj[0].toFixed(1)}, ${initialProj[1].toFixed(1)}]` : 'NULL'}`);
+
+
+            // Clear old highlights
+            highlightLayer.selectAll(".test-highlight").remove();
+            log('Old highlights cleared');
+
+            const g = highlightLayer.append("g").attr("class", "test-highlight");
+            log('Created highlight group');
+
+            if (isRashi) {
+                // Constellation
+                g.append("circle")
+                    .attr("r", 50)
+                    .style("fill", "rgba(0, 210, 255, 0.2)")
+                    .style("stroke", "#00d2ff")
+                    .style("stroke-width", 3);
+
+                g.append("text")
+                    .attr("y", 70)
+                    .attr("text-anchor", "middle")
+                    .style("fill", "#00d2ff")
+                    .style("font-size", "18px")
+                    .style("font-weight", "bold")
+                    .text(`💠 ${name}`);
+                log('Added constellation elements');
+            } else {
+                // Star
+                g.append("line").attr("x1", -30).attr("y1", 0).attr("x2", 30).attr("y2", 0).style("stroke", "#ff9100").style("stroke-width", 2);
+                g.append("line").attr("x1", 0).attr("y1", -30).attr("x2", 0).attr("y2", 30).style("stroke", "#ff9100").style("stroke-width", 2);
+                g.append("circle").attr("r", 15).style("fill", "none").style("stroke", "#ff9100").style("stroke-width", 2);
+                g.append("text")
+                    .attr("x", 25)
+                    .attr("y", -25)
+                    .style("fill", "#ff9100")
+                    .style("font-size", "16px")
+                    .style("font-weight", "bold")
+                    .text(`🎯 ${name}`);
+                log('Added star elements');
+            }
+
+            // Sync loop
+            function syncHighlight() {
+                const proj = Celestial.mapProjection(coords);
+                if (proj) {
+                    g.attr("transform", `translate(${proj[0]}, ${proj[1]})`);
+                    g.style("display", "block");
+                } else {
+                    g.style("display", "none");
+                }
+                requestAnimationFrame(syncHighlight);
+            }
+            syncHighlight();
+            log('Started sync loop');
+        }
+
+        function testStar() {
+            log('=== TESTING STAR (Hamal) ===');
+            Celestial.rotate({ duration: 1000, center: [COORDS.Hamal[0], COORDS.Hamal[1], 0] });
+            setTimeout(() => addHighlight(COORDS.Hamal, "Hamal", false), 1200);
+        }
+
+        function testConstellation() {
+            log('=== TESTING CONSTELLATION (Leo) ===');
+            Celestial.rotate({ duration: 1000, center: [COORDS.Leo[0], COORDS.Leo[1], 0] });
+            setTimeout(() => addHighlight(COORDS.Leo, "Leo", true), 1200);
+        }
+
+        function clearHighlights() {
+            log('Clearing all highlights');
+            d3.select("#highlight-layer").selectAll(".test-highlight").remove();
+        }
+
+        function inspectDOM() {
+            log('=== DOM INSPECTION ===');
+            const mapContainer = document.getElementById('celestial-map');
+            log(`Map container children: ${mapContainer.children.length}`);
+            Array.from(mapContainer.children).forEach((child, i) => {
+                log(`  Child ${i}: <${child.tagName}> id="${child.id}" class="${child.className}"`);
+            });
+
+            const highlightLayer = document.getElementById('highlight-layer');
+            if (highlightLayer) {
+                log(`Highlight layer exists: ${highlightLayer.children.length} children`);
+            } else {
+                log('Highlight layer does NOT exist');
+            }
+        }
+    </script>
+</body>
+
+</html>

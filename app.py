@@ -393,8 +393,7 @@ def ai_explain():
                 "audio_summary": parsed.get('audio_summary', "The stars are telling a complex story. Let's look at the details below.")
             })
         except Exception as json_err:
-            print(f"AI JSON Parse Error: {json_err}. Raw: {raw_output[:200]}")
-            # Fallback if AI didn't return valid JSON
+            # Fallback if AI didn't return valid JSON (expected for the new Markdown-only model)
             return jsonify({
                 "success": True,
                 "insight": raw_output,
@@ -461,12 +460,22 @@ def insights_page(civ=None):
     # Resolve active civ
     active_civ = civ or (data.get('metadata', {}).get('civilization') if data else 'panchanga')
     
+    # Load Star Catalog for Panchanga
+    star_catalog = {}
+    if active_civ == 'panchanga':
+        try:
+            with open(os.path.join(os.path.dirname(__file__), 'data', 'star_catalog.json'), 'r') as f:
+                star_catalog = json.load(f)
+        except Exception as e:
+            print(f"Warning: Could not load star catalog: {e}")
+
     # 2026-01-22: Split Architecture for Zero Mutation
     # Serve distinct templates for each civilization to prevent regression.
     if active_civ == 'mayan':
         return render_template('insights_mayan.html', initial_data=data, active_civ=active_civ)
     elif active_civ == 'panchanga':
-        return render_template('insights_panchanga.html', initial_data=data, active_civ=active_civ)
+        return render_template('insights_panchanga.html', initial_data=data, active_civ=active_civ, star_catalog=star_catalog)
+
     else:
         # Fallback for future calendars or generic use
         return render_template('insights.html', initial_data=data, active_civ=active_civ)

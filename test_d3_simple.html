@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Simple D3 Test</title>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+
+<body>
+    <h1>D3 Library Test</h1>
+    <div id="test"></div>
+    <div id="status" style="margin-top: 20px; padding: 10px; background: #f0f0f0;"></div>
+
+    <script>
+        const statusDiv = document.getElementById('status');
+
+        // Test 1: Is D3 loaded?
+        if (typeof d3 !== 'undefined') {
+            statusDiv.innerHTML += '<p style="color: green;">✅ D3.js is loaded (version ' + d3.version + ')</p>';
+
+            // Test 2: Can we select and append?
+            try {
+                d3.select("#test").append("p").text("D3 selection works!");
+                statusDiv.innerHTML += '<p style="color: green;">✅ D3 selection and append works</p>';
+            } catch (e) {
+                statusDiv.innerHTML += '<p style="color: red;">❌ D3 selection failed: ' + e.message + '</p>';
+            }
+
+            // Test 3: Can we create an SVG?
+            try {
+                const svg = d3.select("#test").append("svg")
+                    .attr("width", 200)
+                    .attr("height", 100)
+                    .style("border", "1px solid black");
+
+                svg.append("circle")
+                    .attr("cx", 100)
+                    .attr("cy", 50)
+                    .attr("r", 30)
+                    .style("fill", "orange");
+
+                svg.append("text")
+                    .attr("x", 100)
+                    .attr("y", 55)
+                    .attr("text-anchor", "middle")
+                    .style("fill", "white")
+                    .text("Test");
+
+                statusDiv.innerHTML += '<p style="color: green;">✅ SVG creation works</p>';
+            } catch (e) {
+                statusDiv.innerHTML += '<p style="color: red;">❌ SVG creation failed: ' + e.message + '</p>';
+            }
+        } else {
+            statusDiv.innerHTML += '<p style="color: red;">❌ D3.js is NOT loaded</p>';
+        }
+
+        // Test 4: Check Celestial
+        statusDiv.innerHTML += '<p>Checking for Celestial library...</p>';
+        setTimeout(() => {
+            if (typeof Celestial !== 'undefined') {
+                statusDiv.innerHTML += '<p style="color: green;">✅ Celestial is loaded</p>';
+            } else {
+                statusDiv.innerHTML += '<p style="color: red;">❌ Celestial is NOT loaded</p>';
+            }
+        }, 2000);
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/gh/ofrohn/d3-celestial/celestial.min.js"></script>
+</body>
+
+</html>

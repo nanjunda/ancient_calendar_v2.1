@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>D3-Celestial Student Prototype</title>
+    <!-- D3-Celestial requires D3.js and its own JS/CSS -->
+    <script src="https://cdn.jsdelivr.net/gh/ofrohn/d3-celestial/lib/d3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/ofrohn/d3-celestial/lib/d3.geo.projection.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/ofrohn/d3-celestial/celestial.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ofrohn/d3-celestial/celestial.css">
+    <style>
+        body {
+            background: #0d1117;
+            color: #c9d1d9;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #celestial-map {
+            width: 1000px;
+            height: 600px;
+            margin: 20px auto;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .controls {
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #58a6ff;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🔭 Student Star Map (D3-Celestial)</h1>
+    <div class="controls">
+        <p>This view emphasizes constellation patterns and labels - much easier for learning than photographic maps.</p>
+    </div>
+    <div id="celestial-map"></div>
+    <script>
+        // Minimal configuration for student clarity
+        Celestial.display({
+            location: true,
+            interactive: true,
+            controls: true,
+            projection: "orthographic",
+            transform: "equatorial",
+            style: {
+                fill: "#111",      // Background color
+                line: "#58a6ff"   // Constellation line color
+            },
+            stars: {
+                show: true,
+                limit: 6,
+                colors: true,
+                names: true,
+                proper: true,
+                style: { fill: "#fff", opacity: 1 }
+            },
+            dsos: { show: false }, // Hide faint objects for students
+            constellations: {
+                show: true,
+                names: true,
+                desig: true,
+                namestyle: { fill: "#f0883e", align: "left", baseline: "middle", font: ["14px Inter", "14px sans-serif"] },
+                lines: true,
+                linestyle: { stroke: "#58a6ff", width: 1, opacity: 0.6 },
+                bounds: true,
+                boundstyle: { stroke: "#30363d", width: 0.5, opacity: 0.8, dash: [2, 4] }
+            },
+            mw: { show: true, style: { fill: "#ffffff", opacity: 0.1 } }, // Milky Way
+            grid: { show: true, dash: [1, 1], opacity: 0.2 }
+        });
+    </script>
+</body>
+
+</html>

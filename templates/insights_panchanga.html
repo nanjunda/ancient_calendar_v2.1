@@ -97,11 +97,158 @@
             color: var(--text-white);
             position: relative;
             max-width: 90%;
-            /* Prevent overlap overlap */
-            margin: 0 auto;
-            /* Center it */
-            border-radius: 0 0 16px 16px;
-            transition: all 0.3s ease;
+        }
+
+        /* Chat Widget Styles */
+        #chat-widget-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 15px;
+        }
+
+        #chat-window {
+            width: 350px;
+            height: 500px;
+            background: rgba(13, 17, 23, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+            transform: translateY(20px) scale(0.95);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #chat-window.active {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .chat-header {
+            padding: 1.2rem;
+            background: rgba(255, 145, 0, 0.1);
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header h4 {
+            margin: 0;
+            color: var(--secondary);
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            max-width: 85%;
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .message.bot {
+            background: rgba(255, 255, 255, 0.05);
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+        }
+
+        .message.user {
+            background: var(--secondary);
+            color: #000;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+            font-weight: 500;
+        }
+
+        .chat-input-area {
+            padding: 1rem;
+            border-top: 1px solid var(--glass-border);
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        #chat-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            padding: 0.5rem 0.8rem;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        #chat-input:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+
+        #chat-toggle-btn {
+            width: 60px;
+            height: 60px;
+            background: var(--secondary);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255, 145, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        #chat-toggle-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .dots {
+            display: inline-block;
+        }
+
+        .dots::after {
+            content: '.';
+            animation: dots 1.5s steps(5, end) infinite;
+        }
+
+        @keyframes dots {
+
+            0%,
+            20% {
+                content: '.';
+            }
+
+            40% {
+                content: '..';
+            }
+
+            60% {
+                content: '...';
+            }
+
+            80%,
+            100% {
+                content: '';
+            }
         }
 
         .visual-significance.minimized {
@@ -131,6 +278,164 @@
             text-align: center;
             border-top: 1px solid var(--border-color);
         }
+
+        /* Stellarium Modal Styles */
+        #skymap-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 3000;
+            flex-direction: column;
+            transition: opacity 0.3s ease;
+        }
+
+        #skymap-modal.active {
+            display: flex;
+        }
+
+        .modal-header {
+            padding: 1rem 2rem;
+            background: #111;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: var(--secondary);
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .close-modal-btn {
+            background: var(--secondary);
+            color: black;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        #celestial-map {
+            width: 100%;
+            height: 500px;
+            background: #000;
+            border-radius: 12px;
+            margin: 20px 0;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        #celestial-map canvas {
+            display: block;
+            margin: 0 auto;
+        }
+
+        .skymap-trigger {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 145, 0, 0.1);
+            border: 1px solid var(--secondary);
+            color: var(--secondary);
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            margin: 5px 0;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .skymap-trigger:hover {
+            background: var(--secondary);
+            color: black;
+            transform: translateY(-2px);
+        }
+
+        /* Sky Map Controls */
+        .skymap-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1002;
+            background: rgba(16, 20, 24, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 10px 20px;
+            display: flex;
+            gap: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .skymap-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #ecf0f1;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .skymap-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .skymap-btn.active {
+            background: #ff9100;
+            color: #000;
+            font-weight: bold;
+        }
+
+        /* Sky Map Search */
+        .skymap-search-container {
+            display: flex;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 5px 15px;
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        #skymap-search {
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 5px;
+            width: 200px;
+            font-family: inherit;
+        }
+
+        #skymap-search:focus {
+            outline: none;
+        }
+
+        .skymap-search-btn {
+            background: var(--secondary);
+            border: none;
+            color: black;
+            padding: 5px 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.8em;
+        }
     </style>
 </head>
 
@@ -147,7 +452,7 @@
         <!-- Loading State -->
         <div id="loading-insights" class="loading-state">
             <div class="orbit-spinner"></div>
-            <p style="margin-top: 1rem; color: var(--text-muted);">Calibrating Wisdom Engine...</p>
+            <p style="margin-top: 1rem; color: var(--text-muted);">Calibrating Astronomical Engine...</p>
         </div>
 
         <!-- Content Display -->
@@ -155,25 +460,10 @@
             <!-- Dynamic Content Injected Here -->
         </div>
 
-        <!-- Chat Interface -->
-        <div id="chat-window">
-            <div id="chat-header" onclick="toggleChat()">
-                <span>Ask the Sages (AI)</span>
-                <span>▼</span>
-            </div>
-            <div id="chat-messages"></div>
-            <div style="display: flex; gap: 10px; padding: 10px;">
-                <input type="text" id="chat-input" placeholder="Ask about this alignment..."
-                    onkeypress="if(event.key==='Enter') sendMessage()">
-                <button onclick="sendMessage()"
-                    style="background: var(--secondary); border: none; padding: 5px 15px; cursor: pointer; border-radius: 4px;">Send</button>
-            </div>
-        </div>
-
-        <!-- Engagement Sections (v6.0) -->
+        <!-- Secularized Engagement Sections (v6.0) -->
         <div id="quiz-section" class="hidden"
             style="margin-top: 3rem; border: 1px solid var(--border-color); padding: 1.5rem; border-radius: 12px; background: rgba(0,0,0,0.3);">
-            <h3 style="color: var(--secondary); margin-bottom: 1rem;">🧠 Maestro's Challenge</h3>
+            <h3 style="color: var(--secondary); margin-bottom: 1rem;">🧠 Lead Educator's Challenge</h3>
             <p id="quiz-question" style="font-size: 1.1rem; margin-bottom: 1rem;"></p>
             <div id="quiz-options" style="display: flex; flex-direction: column; gap: 10px;"></div>
             <div id="quiz-feedback" style="margin-top: 1rem; font-weight: bold;"></div>
@@ -202,6 +492,77 @@
         </div>
 
     </div>
+
+    <!-- Cosmic Chatbot Widget -->
+    <div id="chat-widget-container">
+        <div id="chat-window">
+            <div class="chat-header">
+                <h4>✨ Chat with the Lead Educator</h4>
+                <button onclick="toggleChat()"
+                    style="background:none; border:none; color:white; cursor:pointer; font-size:1.2rem;">×</button>
+            </div>
+            <div id="chat-messages" class="chat-messages">
+                <div class="message bot">
+                    Greetings, cosmic traveler! I am the Lead Educator. Ask me anything about the stars, the Panchanga,
+                    or
+                    how ancient civilizations read the sky.
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Ask about the stars..."
+                    onkeypress="if(event.key==='Enter') sendMessage()">
+                <button onclick="sendMessage()"
+                    style="background:var(--secondary); border:none; border-radius:8px; padding:0 10px; cursor:pointer;">➔</button>
+            </div>
+        </div>
+        <button id="chat-toggle-btn" onclick="toggleChat()">✨</button>
+    </div>
+
+    <!-- Toast Notification System -->
+    <div id="toast-container"
+        style="position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 10000; pointer-events: none;">
+    </div>
+
+    <!-- External Sky Map Integration (Co-Pilot Mode) -->
+    <script>
+        function showToast(message, duration = 5000) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast-notification';
+            toast.innerHTML = message;
+            toast.style.cssText = `
+                background: rgba(11, 14, 20, 0.95);
+                color: #fff;
+                padding: 12px 24px;
+                border-radius: 8px;
+                margin-top: 10px;
+                border: 1px solid var(--secondary);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+                font-family: 'Inter', sans-serif;
+                font-size: 0.95rem;
+                opacity: 0;
+                transform: translateY(20px);
+                transition: all 0.3s ease;
+                text-align: center;
+                pointer-events: auto;
+            `;
+
+            container.appendChild(toast);
+
+            // Animate In
+            requestAnimationFrame(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateY(0)';
+            });
+
+            // Remove after duration
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(20px)';
+                setTimeout(() => toast.remove(), 300);
+            }, duration);
+        }
+    </script>
     <script>
         // Global Error Handler for Hanging Issues
         window.onerror = function (msg, url, line, col, error) {
@@ -260,7 +621,7 @@
             display.innerHTML = `
                     <div style="text-align: center; padding: 2rem;">
                         <p style="color: var(--secondary); font-weight: bold; font-size: 1.2rem;">⚠️ Astronomical Configuration Missing</p>
-                        <p>The Wisdom Engine needs a specific moment in time to explain.</p>
+                        <p>The Astronomical Engine needs a specific moment in time to explain.</p>
                         <p style="margin-top: 1rem;"><strong>Please go back, run a conversion, then click Explore Insights.</strong></p>
                     </div>
                 `;
@@ -289,23 +650,36 @@
                 let rawInsight = result.insight || "";
                 if (typeof rawInsight !== 'string') rawInsight = JSON.stringify(rawInsight);
 
-                let htmlContent = "";
-                function robustMarkdown(text) {
-                    // Custom high-resilience student-friendly fallback
-                    return text
-                        .replace(/^# (.*$)/gim, '<h1 style="color:var(--secondary);border-bottom:2px solid var(--secondary);padding-bottom:10px;margin-bottom:20px;">🚀 $1</h1>')
-                        .replace(/^## (.*$)/gim, '<h2 style="color:var(--secondary);margin-top:30px;">🛰️ $1</h2>')
-                        .replace(/^### (.*$)/gim, '<h3 style="color:var(--secondary);margin-top:20px;">🔬 $1</h3>')
-                        .replace(/^\s*[\-\*] (.*$)/gim, '<li style="margin-left:20px;list-style:none;">✨ $1</li>')
-                        .replace(/\*\*(.*?)\*\*/gim, '<strong style="color:var(--secondary);">$1</strong>')
-                        .replace(/\n/g, '<br>');
-                }
+                // --- FIX 1: Cosmic Identity Card (Zero Mutation of AI, but Richer UX) ---
+                const identityCard = `
+                    <div class="cosmic-identity-card" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:15px; background:rgba(255,255,255,0.05); padding:20px; border-radius:16px; margin-bottom:25px; border:1px solid rgba(255,255,255,0.1);">
+                        <div style="text-align:center;">
+                            <div style="color:var(--secondary); font-size:0.8em; text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">Tithi (Phase)</div>
+                            <div style="font-size:1.2em; font-weight:bold; color:#fff;">${insightData.tithi}</div>
+                        </div>
+                        <div style="text-align:center;">
+                            <div style="color:var(--secondary); font-size:0.8em; text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">Nakshatra (Star)</div>
+                            <div style="font-size:1.2em; font-weight:bold; color:#fff;">${insightData.nakshatra}</div>
+                        </div>
+                         <div style="text-align:center;">
+                            <div style="color:var(--secondary); font-size:0.8em; text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">Rashi (Sun Sign)</div>
+                            <div style="font-size:1.2em; font-weight:bold; color:#fff;">${insightData.rashi?.name || insightData.saura_mana || 'Unknown'}</div>
+                        </div>
+                        <div style="text-align:center;">
+                            <div style="color:var(--secondary); font-size:0.8em; text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">Samvatsara</div>
+                            <div style="font-size:1.2em; font-weight:bold; color:#fff;">${insightData.samvatsara}</div>
+                        </div>
+                    </div>
+                `;
+
+                let htmlContent = identityCard;
 
                 try {
-                    htmlContent = robustMarkdown(rawInsight);
+                    // Use the robust marked.js library already included in the head
+                    htmlContent += marked.parse(rawInsight);
                 } catch (pe) {
                     console.error("Markdown parse failed:", pe);
-                    htmlContent = rawInsight.replace(/\n/g, '<br>');
+                    htmlContent += rawInsight.replace(/\n/g, '<br>');
                 }
 
                 const panchangaGlossary = {
@@ -373,7 +747,8 @@
                 };
 
                 function parseVisualTags(content) {
-                    return content.replace(/\[\[RENDER:(.*?)\]\]/g, (match, tagName) => {
+                    // 1. Existing 3D Module Parser
+                    let parsed = content.replace(/\[\[RENDER:(.*?)\]\]/g, (match, tagName) => {
                         const tag = renderTags[tagName.trim()];
                         if (tag) {
                             return `
@@ -394,6 +769,31 @@
                         }
                         return `<p style="color:red">[System: Rendering ${tagName} failed - Module not found]</p>`;
                     });
+
+                    // 2. D3-Celestial Sky Map Parser (v6.2)
+                    parsed = parsed.replace(/\[\[CELESTIAL:(.*?)\]\]/g, (match, target) => {
+                        const cleanTarget = target.trim();
+                        let label = `🔭 Look at ${cleanTarget}`;
+                        let extraArgs = '';
+
+                        // FIX 2: Smarter Labels & FIX 3: Sun Position Context
+                        if (cleanTarget === 'Sun') {
+                            const rashi = insightData.rashi?.name || insightData.saura_mana || 'Mesha';
+                            label = `☀️ Look at Sun (in ${rashi})`;
+                            extraArgs = `, '${rashi}'`;
+                        } else if (cleanTarget.includes(' ') || cleanTarget.length > 8) {
+                            // Likely a Bayer designation or long name (Star)
+                            label = `🔭 Open Sky Map: ${cleanTarget}`;
+                        } else {
+                            // Generic object
+                            label = `🔭 Open Sky Map: ${cleanTarget}`;
+                        }
+
+                        // Use simple window.open trigger
+                        return `<button class="skymap-trigger" onclick="openCelestial('${cleanTarget}'${extraArgs})">${label}</button>`;
+                    });
+
+                    return parsed;
                 }
 
                 htmlContent = parseVisualTags(htmlContent);
@@ -410,55 +810,19 @@
             loader.classList.add('hidden');
         } catch (error) {
             if (error.name === 'AbortError') {
-                display.innerHTML = "<p>The Wisdom Engine is taking too long to respond. Please try again.</p>";
+                display.innerHTML = "<p>The Astronomical Engine is taking too long to respond. Please try again.</p>";
             } else {
                 console.error("Fetch Error:", error);
-                display.innerHTML = "<p>Failed to connect to the Wisdom Engine. Please try again later.</p>";
+                display.innerHTML = "<p>Failed to connect to the Astronomical Engine. Please try again later.</p>";
             }
             display.classList.remove('hidden');
             loader.classList.add('hidden');
         }
-        });
+    });
 
-        // Global function for Reactive Glossary triggers
-        function triggerVisualHighlight(tagId) {
-            if (!tagId) return;
 
-            const renderTags = {
-                'ZODIAC_COMPARISON': 'visual-zodiac',
-                'MOON_PHASE_3D': 'visual-moon',
-                'PRECESSION_WOBBLE': 'visual-precession',
-                'CONSTELLATION_MAP': 'visual-constellations',
-                'SAMVATSARA_RESONANCE': 'visual-samvatsara',
-                'CALENDAR_DRIFT': 'time-machine-section',
-                'VIGESEL_ODOOMETER': 'visual-mayan-gears',
-                'GEAR_INTERLOCK_52YR': 'visual-calendar-round',
-                'VENUS_MARS_ALIGNMENT': 'visual-venus-cycle'
-            };
 
-            const elementId = renderTags[tagId];
-            const targetEl = document.getElementById(elementId);
-
-            if (targetEl) {
-                // 1. Smooth Scroll to Visual
-                targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-                // 2. Visual Feedback (Flash)
-                targetEl.style.transition = "box-shadow 0.5s";
-                targetEl.style.boxShadow = "0 0 30px var(--secondary)";
-                setTimeout(() => {
-                    targetEl.style.boxShadow = "none";
-                }, 1000);
-
-                // 3. Message Passing (v5.1 Advanced)
-                const iframe = targetEl.querySelector('iframe');
-                if (iframe && iframe.contentWindow) {
-                    iframe.contentWindow.postMessage({ action: 'pulse', term: tagId }, '*');
-                }
-            }
-        }
-
-        // Chatbot Functionality (v5.4)
+        // Chatbot Functionality (v5.4 Restore)
         function toggleChat() {
             const window = document.getElementById('chat-window');
             window.classList.toggle('active');
@@ -478,23 +842,25 @@
             input.value = '';
             messages.scrollTop = messages.scrollHeight;
 
-            // 2. Append Loading Sages
+            // 2. Append Loading Dots
             const botMsg = document.createElement('div');
             botMsg.className = 'message bot';
-            botMsg.innerHTML = 'Analyzing the heavens<span class="dots"></span>';
+            botMsg.innerHTML = 'Analyzing celestial data<span class="dots"></span>';
             messages.appendChild(botMsg);
             messages.scrollTop = messages.scrollHeight;
 
             try {
-                // Get context from global insightData
-                // Get context safely - chat can happen even if insightData is partial
-                const context = {
-                    address: (typeof insightData !== 'undefined') ? insightData?.address : "Unknown Location",
-                    samvatsara: (typeof insightData !== 'undefined') ? insightData?.samvatsara : "Unknown",
-                    masa: (typeof insightData !== 'undefined') ? insightData?.masa : "Unknown",
-                    tithi: (typeof insightData !== 'undefined') ? insightData?.tithi : "Unknown",
-                    nakshatra: (typeof insightData !== 'undefined') ? insightData?.nakshatra : "Unknown"
-                };
+                // Get context from global data (v2.1)
+                const storageKey = "{{ active_civ }}" === 'panchanga' ? 'lastPanchangaResult' : `last${("{{ active_civ }}").charAt(0).toUpperCase() + ("{{ active_civ }}").slice(1)}Result`;
+                const rawData = localStorage.getItem(storageKey) || localStorage.getItem('lastHubResult');
+                let context = {};
+                if (rawData) {
+                    try {
+                        context = JSON.parse(rawData);
+                    } catch (e) {
+                        console.error("DEBUG: Storage parse error in chat", e);
+                    }
+                }
 
                 const response = await fetch('/api/ai-chat', {
                     method: 'POST',
@@ -505,15 +871,15 @@
                 const result = await response.json();
                 botMsg.textContent = result.success ? result.response : "The star-link is fuzzy... " + result.error;
             } catch (err) {
-                botMsg.textContent = "Connection Error: " + err.message;
-                console.error("Chat Error:", err);
+                botMsg.textContent = "The Lead Educator is currently observing the stars and cannot be reached.";
             }
             messages.scrollTop = messages.scrollHeight;
         }
 
-        // --- Version 6.0 Engagement Logic ---
+        // --- Core Rendering Engine ---
+        // --- Version 6.0 Engagement Logic (Secularized) ---
 
-        function initMaestrosChallenge() {
+        function initEducatorsChallenge() {
             const quizSection = document.getElementById('quiz-section');
             const questionEl = document.getElementById('quiz-question');
             const optionsEl = document.getElementById('quiz-options');
@@ -583,8 +949,6 @@
                 yearDisplay.textContent = year;
 
                 // Deterministic Drift Physics (v6.0.1)
-                // Base: Lunar year is 11 days shorter than Solar.
-                // Reset: Every 3 years (approx) an Adhika Masa (30 days) pulls it back.
                 const anchorYear = 2025;
                 const yearsPassed = year - anchorYear;
 
@@ -595,7 +959,7 @@
                 const leapMonths = Math.floor((yearsPassed + 1.2) / 2.7);
                 const effectiveDrift = (rawDrift - (leapMonths * 30)) % 30;
 
-                // Map effectiveDrift (-15 to +15 ideally) to the Sync Meter (10% to 90%)
+                // Map effectiveDrift to the Sync Meter
                 const percentage = 50 + (effectiveDrift * 2.5);
                 pointer.style.left = `${Math.max(5, Math.min(95, percentage))}%`;
 
@@ -606,26 +970,111 @@
                 if (driftAbs < 3) {
                     physicsNote = " ✨ <strong>COSMIC SYNC!</strong> In this year, the solar and lunar cycles align perfectly.";
                 } else if (leapMonths !== Math.floor((year - 1 - anchorYear + 1.2) / 2.7)) {
-                    physicsNote = " 🚀 <strong>ADHIKA MASA RESET!</strong> A leap month was added recently to stop your birthday from drifting out of its season.";
+                    physicsNote = " 🚀 <strong>ADHIKA MASA RESET!</strong> A leap month was added recently to restore seasonal alignment.";
                 }
 
-                expl.innerHTML = `<strong>Year ${year}:</strong> Your Panchanga birthday falls approximately <strong>${driftAbs} days ${direction}</strong> than your Gregorian birthday. Since the Moon travels faster than our seasonal calendar, it creates this rhythmic drift.${physicsNote}`;
+                expl.innerHTML = `<strong>Year ${year}:</strong> Your Panchanga birthday falls approximately
+                    <strong>${driftAbs} days ${direction}</strong> than your Gregorian birthday. Since the Moon travels faster than
+                    our seasonal calendar, it creates this rhythmic drift.${physicsNote}`;
             }
 
             scrubber.oninput = (e) => updateTimeMachine(parseInt(e.target.value));
-
-            // Start at 2025
             updateTimeMachine(2025);
         }
 
-        // Add to main initialization
+
+        // Stellarium Web Co-Pilot (External Window Logic)
+        function openCelestial(target) {
+            console.log('openCelestial called for:', target);
+
+            // 1. Show Toast Guidance
+            const message = `
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span style="font-size:1.2em;">🚀</span>
+                    <div>
+                        <strong>Opening Sky Map...</strong><br>
+                        <span style="opacity:0.8; font-size:0.9em;">Click 🔍 Search in the new tab and type: <strong style="color:var(--secondary);">${target}</strong></span>
+                    </div>
+                </div>
+            `;
+            showToast(message, 6000);
+
+            // 2. Open External Window (Co-Pilot Mode)
+            // Using a slight delay to ensure the toast is seen first
+            setTimeout(() => {
+                window.open('https://stellarium-web.org/', '_blank');
+            }, 800);
+        }
+
+        // Clean up legacy function
+        function closeCelestial() {
+            // No-op for external window mode
+        }
+
+        // Chatbot Functionality (Restored)
+        function toggleChat() {
+            const window = document.getElementById('chat-window');
+            window.classList.toggle('active');
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const messages = document.getElementById('chat-messages');
+            const text = input.value.trim();
+            if (!text) return;
+
+            // 1. Append User Message
+            const userMsg = document.createElement('div');
+            userMsg.className = 'message user';
+            userMsg.textContent = text;
+            messages.appendChild(userMsg);
+            input.value = '';
+            messages.scrollTop = messages.scrollHeight;
+
+            // 2. Append Loading Dots
+            const botMsg = document.createElement('div');
+            botMsg.className = 'message bot';
+            botMsg.innerHTML = 'Consulting the Sages<span class="dots"></span>';
+            messages.appendChild(botMsg);
+            messages.scrollTop = messages.scrollHeight;
+
+            try {
+                // Use the data currently loaded on the page for context
+                // We access the 'insightData' variable from the main scope if available, or fallback
+                let context = {};
+                try {
+                    // We need to re-access the insightData if it's not globally available. 
+                    // Since insightData is scoped in DOMContentLoaded, we might need a way to access it or reconstruct it.
+                    // A safe bet is to grab the text content from the title or just use generic context if specific data isn't easily reachable without refactoring.
+                    // IMPROVEMENT: Let's try to grab values from the DOM if possible, or just default context.
+                    context = {
+                        address: "Panchanga Insights",
+                        role: "Astronomical Guide"
+                    };
+                } catch (e) { }
+
+                const response = await fetch('/api/ai-chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text, context })
+                });
+
+                const result = await response.json();
+                botMsg.textContent = result.success ? result.response : "The star-link is fuzzy... " + result.error;
+            } catch (err) {
+                botMsg.textContent = "The Maestro is currently observing the stars and cannot be reached.";
+            }
+            messages.scrollTop = messages.scrollHeight;
+        }
+
         window.addEventListener('load', () => {
             setTimeout(() => {
-                initMaestrosChallenge();
+                initEducatorsChallenge();
                 initBirthdayTimeMachine();
             }, 2000);
         });
     </script>
+
 </body>
 
 </html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>D3-Celestial Test</title>
+    <script src="https://cdn.jsdelivr.net/gh/ofrohn/d3-celestial/lib/d3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/ofrohn/d3-celestial/lib/d3.geo.projection.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/ofrohn/d3-celestial/celestial.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ofrohn/d3-celestial/celestial.css">
+    <style>
+        #celestial-map {
+            width: 800px;
+            height: 600px;
+            background: #000;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="celestial-map"></div>
+    <button onclick="clearMarkers()">Clear Markers</button>
+    <button onclick="addGreen()">Add Green</button>
+    <script>
+        const raHours = 2.5303;
+        const raDeg = raHours * 15;
+        const decDeg = 89.2641;
+
+        const config = {
+            container: "celestial-map",
+            datapath: "https://cdn.jsdelivr.net/gh/ofrohn/d3-celestial/data/",
+            projection: "aitoff",
+            center: [raDeg, decDeg],
+            zoomlevel: 2,
+            width: 800,
+            controls: false
+        };
+
+        Celestial.display(config);
+
+        Celestial.add({
+            type: "FeatureCollection",
+            features: [{
+                type: "Feature",
+                properties: {
+                    name: "Polaris",
+                    size: 6,
+                    color: "#ffcc00"
+                },
+                geometry: {
+                    type: "Point",
+                    coordinates: [raDeg, decDeg]
+                }
+            }]
+        });
+
+        // Test Accumulation: Add a second marker at a different location
+        Celestial.add({
+            type: "FeatureCollection",
+            features: [{
+                type: "Feature",
+                properties: {
+                    name: "Test Marker",
+                    size: 10,
+                    color: "#00ff00"
+                },
+                geometry: {
+                    type: "Point",
+                    coordinates: [raDeg + 10, decDeg - 10]
+                }
+            }]
+        });
+
+        function clearMarkers() {
+            try {
+                Celestial.clear(); // Try native clear
+                Celestial.redraw();
+                console.log("Called Celestial.clear()");
+            } catch (e) {
+                console.error("Celestial.clear failed", e);
+            }
+        }
+
+        function addGreen() {
+            Celestial.add({
+                type: "FeatureCollection",
+                features: [{
+                    type: "Feature",
+                    properties: {
+                        name: "Test Marker",
+                        size: 10,
+                        color: "#00ff00"
+                    },
+                    geometry: {
+                        type: "Point",
+                        coordinates: [raDeg + 10, decDeg - 10]
+                    }
+                }]
+            });
+            Celestial.redraw();
+        }
+    </script>
+</body>
+
+</html>

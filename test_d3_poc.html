@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>D3-Celestial PoC: Orion Focus</title>
+    <script src="https://cdn.jsdelivr.net/gh/ofrohn/d3-celestial/lib/d3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/ofrohn/d3-celestial/lib/d3.geo.projection.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/ofrohn/d3-celestial/celestial.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ofrohn/d3-celestial/celestial.css">
+    <style>
+        body {
+            background: #0d1117;
+            color: #c9d1d9;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #celestial-map {
+            width: 900px;
+            height: 600px;
+            margin: 20px auto;
+            border: 2px solid #30363d;
+            border-radius: 12px;
+            background: #000;
+        }
+
+        .controls {
+            padding: 20px;
+            display: flex;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid #30363d;
+            width: 100%;
+            justify-content: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #238636;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #2ea043;
+        }
+
+        button.secondary {
+            background: #30363d;
+        }
+
+        button.secondary:hover {
+            background: #3c444d;
+        }
+
+        h2 {
+            margin: 20px 0 0 0;
+            color: #58a6ff;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>🚀 Programmatic Celestial Control PoC</h2>
+    <div class="controls">
+        <button onclick="resetView()">Reset View</button>
+        <button onclick="focusOrion()">1. Center & Zoom Orion</button>
+        <button onclick="highlightBetelgeuse()">2. Highlight Betelgeuse</button>
+    </div>
+    <div id="celestial-map"></div>
+
+    <script>
+        // Orion Coordinates (Center)
+        // RA: 05h 30m -> ~82.5 degrees
+        // Dec: 0 degrees
+        const ORION_CENTER = [82.5, 0, 0];
+
+        // Betelgeuse Coordinates
+        // RA: 05h 55m -> ~88.75 degrees
+        // Dec: +7.4 degrees
+        const BETELGEUSE = [88.75, 7.4];
+
+        Celestial.display({
+            container: "celestial-map",
+            projection: "orthographic",
+            transform: "equatorial",
+            controls: false, // Turn off built-in UI to show programmatic control
+            interactive: true,
+            background: { fill: "#000", opacity: 1 },
+            stars: {
+                show: true,
+                limit: 6,
+                names: true,
+                proper: true,
+                desig: false,
+                style: { fill: "#ffffff", opacity: 1 }
+            },
+            constellations: {
+                show: true,
+                names: true,
+                lines: true,
+                linestyle: { stroke: "#58a6ff", width: 1.5, opacity: 0.7 },
+                bounds: true,
+                boundstyle: { stroke: "#ff7b72", width: 1, opacity: 0.5, dash: [2, 4] }
+            },
+            planets: { show: true },
+            grid: { show: true, opacity: 0.1 }
+        });
+
+        function resetView() {
+            Celestial.rotate({ center: [0, 0, 0] });
+            // Reset zoom is not a direct API call in some versions, but we can re-apply defaults
+            Celestial.apply({
+                projection: "orthographic",
+                stars: { limit: 6 }
+            });
+        }
+
+        function focusOrion() {
+            // STEP 1: Programmatic Rotation
+            Celestial.rotate({
+                center: ORION_CENTER
+            });
+
+            // STEP 2: Programmatic Zoom (via configuration apply)
+            // Some versions use Celestial.zoomBy, others use config updates
+            Celestial.apply({
+                projection: "orthographic",
+                center: ORION_CENTER
+            });
+
+            console.log("Centered on Orion at RA 82.5, Dec 0");
+        }
+
+        function highlightBetelgeuse() {
+            // STEP 3: Highlight a specific star using a custom marker
+            // We can add a custom point layer
+            const point = {
+                "type": "FeatureCollection",
+                "features": [
+                    {
+                        "type": "Feature",
+                        "id": "BetelgeuseMark",
+                        "properties": { "name": "BIRTH STAR: Betelgeuse", "mag": 0.5 },
+                        "geometry": { "type": "Point", "coordinates": BETELGEUSE }
+                    }
+                ]
+            };
+
+            Celestial.add({
+                type: "point",
+                callback: function (error, json) {
+                    if (error) return console.warn(error);
+                    // D3 selection to style our custom point
+                    d3.select("#celestial-map svg").append("circle")
+                        .attr("class", "highlight-ring")
+                        .attr("cx", Celestial.mapProjection(BETELGEUSE)[0])
+                        .attr("cy", Celestial.mapProjection(BETELGEUSE)[1])
+                        .attr("r", 15)
+                        .style("fill", "none")
+                        .style("stroke", "#f0883e")
+                        .style("stroke-width", 3)
+                        .style("stroke-dasharray", "4,2");
+
+                    // Add a pulse animation
+                    repeatAnimation();
+                },
+                redraw: function () {
+                    // Ensure the highlight moves with the map
+                }
+            });
+
+            console.log("Highlighting Betelgeuse at RA 88.75, Dec 7.4");
+        }
+
+        function repeatAnimation() {
+            d3.selectAll(".highlight-ring")
+                .transition()
+                .duration(1000)
+                .attr("r", 25)
+                .style("opacity", 0)
+                .on("end", function () {
+                    d3.select(this)
+                        .attr("r", 10)
+                        .style("opacity", 1);
+                    repeatAnimation();
+                });
+        }
+    </script>
+</body>
+
+</html>

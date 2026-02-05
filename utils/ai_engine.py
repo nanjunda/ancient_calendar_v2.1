@@ -18,7 +18,7 @@ class BaseAIEngine(metaclass=abc.ABCMeta):
         pass
 
 FOUNDATION_PROMPT = """
-Role: The "Astro-Tutor" (The Maestro - An enthusiastic, high-energy Science Educator).
+Role: The "Astronomical Guide" (The Lead Educator - An enthusiastic, high-energy Science Coordinator).
 Target Audience: Students (Grades 6-12).
 Setting: A pure physical science and archaeoastronomy application.
 
@@ -124,7 +124,7 @@ class OpenRouterEngine(BaseAIEngine):
         {config_data}
         """
         
-        system_instruction = "You are the Astro-Tutor. strict_no_astrology: true. format: markdown."
+        system_instruction = "You are the Lead Educator. strict_no_astrology: true. format: markdown."
         raw_response = self._call_openrouter(system_instruction, prompt_tmpl)
         return self._clean_response(raw_response)
 
@@ -152,7 +152,7 @@ class OpenRouterEngine(BaseAIEngine):
 
     def chat_with_tutor(self, message, context_data):
         system_prompt = f"""
-        Role: The "Astro-Tutor" (The Maestro of the Cosmic Explorer).
+        Role: The "Astronomical Guide" (The Lead Educator of the Cosmic Explorer).
         Person: You are an encouraging, highly enthusiastic, and knowledgeable Science Educator who bridges Traditional Indian Panchanga with Modern Astrophysics.
         Tone: High-energy, clear, and educational.
         
@@ -248,7 +248,7 @@ class GeminiEngine(BaseAIEngine):
             return "AI Engine not configured."
             
         system_prompt = f"""
-        Role: The "Astro-Tutor" (The Maestro of the Cosmic Explorer).
+        Role: The "Astronomical Guide" (The Lead Educator of the Cosmic Explorer).
         Person: You are an encouraging, highly enthusiastic, and knowledgeable Science Educator who bridges Traditional Indian Panchanga with Modern Astrophysics.
         Tone: High-energy, clear, and educational.
         

@@ -1,0 +1,271 @@
+{
+  "Ashwini": {
+    "bayer": "Beta Arietis",
+    "flamsteed": "6 Arietis",
+    "traditional": "Sheratan",
+    "sanskrit": "Ashwini",
+    "aliases": [
+      "\u03b2 Ari",
+      "HR 553"
+    ]
+  },
+  "Bharani": {
+    "bayer": "41 Arietis",
+    "flamsteed": "41 Arietis",
+    "traditional": "41 Arietis",
+    "sanskrit": "Bharani",
+    "aliases": [
+      "HR 1017"
+    ]
+  },
+  "Krittika": {
+    "bayer": "Gamma Aurigae",
+    "flamsteed": "24 Aurigae",
+    "traditional": "Ain",
+    "sanskrit": "Krittika",
+    "aliases": [
+      "\u03b3 Aur",
+      "HR 1612"
+    ]
+  },
+  "Rohini": {
+    "bayer": "Alpha Tauri",
+    "flamsteed": "87 Tauri",
+    "traditional": "Aldebaran",
+    "sanskrit": "Rohini",
+    "aliases": [
+      "\u03b1 Tau",
+      "HR 1457"
+    ]
+  },
+  "Mrigashira": {
+    "bayer": "Omicron1 Orionis",
+    "flamsteed": "1 Orionis",
+    "traditional": "Mintaka",
+    "sanskrit": "Mrigashira",
+    "aliases": [
+      "\u03bf1 Ori",
+      "HR 1899"
+    ]
+  },
+  "Ardra": {
+    "bayer": "Beta Orionis",
+    "flamsteed": "24 Orionis",
+    "traditional": "Rigel",
+    "sanskrit": "Ardra",
+    "aliases": [
+      "\u03b2 Ori",
+      "HR 1948"
+    ]
+  },
+  "Punarvasu": {
+    "bayer": "Beta Geminorum",
+    "flamsteed": "34 Geminorum",
+    "traditional": "Pollux",
+    "sanskrit": "Punarvasu",
+    "aliases": [
+      "\u03b2 Gem",
+      "HR 2473"
+    ]
+  },
+  "Pushya": {
+    "bayer": "Delta Cancri",
+    "flamsteed": "69 Cancri",
+    "traditional": "Asellus Australis",
+    "sanskrit": "Pushya",
+    "aliases": [
+      "\u03b4 Cnc",
+      "HR 3429"
+    ]
+  },
+  "Ashlesha": {
+    "bayer": "Epsilon Hydrae",
+    "flamsteed": "11 Hydrae",
+    "traditional": "Ashlesha",
+    "sanskrit": "Ashlesha",
+    "aliases": [
+      "\u03b5 Hya",
+      "HR 3592"
+    ]
+  },
+  "Magha": {
+    "bayer": "Alpha Leonis",
+    "flamsteed": "32 Leonis",
+    "traditional": "Regulus",
+    "sanskrit": "Magha",
+    "aliases": [
+      "\u03b1 Leo",
+      "HR 3982"
+    ]
+  },
+  "Purva Phalguni": {
+    "bayer": "Delta Leonis",
+    "flamsteed": "68 Leonis",
+    "traditional": "Zosma",
+    "sanskrit": "Purva Phalguni",
+    "aliases": [
+      "\u03b4 Leo",
+      "HR 4287"
+    ]
+  },
+  "Uttara Phalguni": {
+    "bayer": "Beta Leonis",
+    "flamsteed": "94 Leonis",
+    "traditional": "Denebola",
+    "sanskrit": "Uttara Phalguni",
+    "aliases": [
+      "\u03b2 Leo",
+      "HR 4540"
+    ]
+  },
+  "Hasta": {
+    "bayer": "Delta Corvi",
+    "flamsteed": "16 Corvi",
+    "traditional": "Algorab",
+    "sanskrit": "Hasta",
+    "aliases": [
+      "\u03b4 Crv",
+      "HR 4634"
+    ]
+  },
+  "Chitra": {
+    "bayer": "Alpha Virginis",
+    "flamsteed": "67 Virginis",
+    "traditional": "Spica",
+    "sanskrit": "Chitra",
+    "aliases": [
+      "\u03b1 Vir",
+      "HR 5056"
+    ]
+  },
+  "Swati": {
+    "bayer": "Alpha Bo\u00f6tis",
+    "flamsteed": "16 Bo\u00f6tis",
+    "traditional": "Arcturus",
+    "sanskrit": "Swati",
+    "aliases": [
+      "\u03b1 Boo",
+      "HR 5435"
+    ]
+  },
+  "Vishakha": {
+    "bayer": "Alpha Librae",
+    "flamsteed": "9 Librae",
+    "traditional": "Zubenelgenubi",
+    "sanskrit": "Vishakha",
+    "aliases": [
+      "\u03b1 Lib",
+      "HR 5531"
+    ]
+  },
+  "Anuradha": {
+    "bayer": "Beta Scorpii",
+    "flamsteed": "35 Scorpii",
+    "traditional": "Graffias",
+    "sanskrit": "Anuradha",
+    "aliases": [
+      "\u03b2 Sco",
+      "HR 5984"
+    ]
+  },
+  "Jyeshtha": {
+    "bayer": "Alpha Scorpii",
+    "flamsteed": "21 Scorpii",
+    "traditional": "Antares",
+    "sanskrit": "Jyeshtha",
+    "aliases": [
+      "\u03b1 Sco",
+      "HR 6134"
+    ]
+  },
+  "Mula": {
+    "bayer": "Lambda Scorpii",
+    "flamsteed": "35 Scorpii",
+    "traditional": "Shaula",
+    "sanskrit": "Mula",
+    "aliases": [
+      "\u03bb Sco",
+      "HR 6527"
+    ]
+  },
+  "Purva Ashadha": {
+    "bayer": "Delta Sagittarii",
+    "flamsteed": "19 Sagittarii",
+    "traditional": "Kaus Media",
+    "sanskrit": "Purva Ashadha",
+    "aliases": [
+      "\u03b4 Sgr",
+      "HR 6960"
+    ]
+  },
+  "Uttara Ashadha": {
+    "bayer": "Zeta Sagittarii",
+    "flamsteed": "38 Sagittarii",
+    "traditional": "Ascella",
+    "sanskrit": "Uttara Ashadha",
+    "aliases": [
+      "\u03b6 Sgr",
+      "HR 7235"
+    ]
+  },
+  "Shravana": {
+    "bayer": "Alpha Capricorni",
+    "flamsteed": "6 Capricorni",
+    "traditional": "Algedi",
+    "sanskrit": "Shravana",
+    "aliases": [
+      "\u03b1 Cap",
+      "HR 7754"
+    ]
+  },
+  "Dhanishta": {
+    "bayer": "Delta Delphini",
+    "flamsteed": "6 Delphini",
+    "traditional": "Deneb Dulfim",
+    "sanskrit": "Dhanishta",
+    "aliases": [
+      "\u03b4 Del",
+      "HR 7928"
+    ]
+  },
+  "Shatabhisha": {
+    "bayer": "Lambda Aquarii",
+    "flamsteed": "13 Aquarii",
+    "traditional": "Sadalmelik",
+    "sanskrit": "Shatabhisha",
+    "aliases": [
+      "\u03bb Aqr",
+      "HR 8402"
+    ]
+  },
+  "Purva Bhadrapada": {
+    "bayer": "Alpha Pegasi",
+    "flamsteed": "88 Pegasi",
+    "traditional": "Markab",
+    "sanskrit": "Purva Bhadrapada",
+    "aliases": [
+      "\u03b1 Peg",
+      "HR 8781"
+    ]
+  },
+  "Uttara Bhadrapada": {
+    "bayer": "Gamma Pegasi",
+    "flamsteed": "88 Pegasi",
+    "traditional": "Algenib",
+    "sanskrit": "Uttara Bhadrapada",
+    "aliases": [
+      "\u03b3 Peg",
+      "HR 8779"
+    ]
+  },
+  "Revati": {
+    "bayer": "Zeta Piscium",
+    "flamsteed": "6 Piscium",
+    "traditional": "Revati",
+    "sanskrit": "Revati",
+    "aliases": [
+      "\u03b6 Psc",
+      "HR 374"
+    ]
+  }
+}

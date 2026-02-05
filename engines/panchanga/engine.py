@@ -130,7 +130,7 @@ class PanchangaEngine(BaseCalendar):
 
         Phase II: The Library of Atoms (Terminology)
         Provide detailed physics/geometric deconstructions for:
-        - **Samvatsara**: Explain as the 60-year Jupiter-Saturn resonance/alignment cycle. Use [[RENDER:SAMVATSARA_RESONANCE]].
+        - **Samvatsara**: Explain as the 60-year Jupiter-Saturn resonance/alignment cycle. Detail the orbital physics: Jupiter takes ~11.86 years and Saturn takes ~29.5 years to orbit the Sun. Their near 5:2 resonance creates a periodic alignment that forms the backbone of this 60-year master cycle. Use [[RENDER:SAMVATSARA_RESONANCE]].
         - **Saka Varsha (The Civil Era)**: Explain this as the **Official Indian Civil Calendar** (used by the Government).
           *   **The Origin**: Started in 78 AD (King Shalivahana).
           *   **The Difference**: It is a purely **Solar (Agricultural)** count, unlike the **Cosmic (Luni-Solar)** Samvatsara. Use the analogy of "Administrative Time" vs "Nature's Time".
@@ -152,9 +152,45 @@ class PanchangaEngine(BaseCalendar):
         Phase III: Decoding Your Specific Cosmic Alignment
         - Create a specific section: `## 🧩 Decoding Your Specific Cosmic Alignment`.
         - Use the specific values from the Input Data (Samvatsara, Masa, etc) to explain THIS specific moment.
-        - Tell the student what they would see if they looked at the sky right now.
+        - Tell the student what they would see if they looked at the sky right now. Explain the exact geometric relationship between the Earth, Sun, and Moon that defines these specific Panchanga elements. For instance, if it is a specific Tithi, explain the precise angular distance required to reach it.
+
+        Phase IV: Interactive Sky Integration (Student Exploration)
+        - Whenever you mention a **Nakshatra** or **Rashi** (Zodiac Sign) in the report, you MUST provide an interactive sky-map trigger using the format: `[[CELESTIAL:TargetName]]`.
+        - For **Nakshatras**, use the common star name (Yogathara) provided in parenthesis in the input data (e.g., if Nakshatra is "Ashwini (Beta Arietis)", use [[CELESTIAL:Hamal]] or [[CELESTIAL:Alpha Arietis]]). Use well-known common names where possible.
+        - For **Rashis**, use the Western constellation name (e.g., "Simha [[CELESTIAL:Leo]]").
+        - Educational Hook: Always inspire the student! "Click the telescope to see the star constellation in our sky!"
 
         Tone: "Cool Science YouTuber" - high energy, fascinating, and precise.
+
+        OBJECT EXPLANATION PROTOCOL (STRICT MANDATE):
+        Whenever you explain a Star (Nakshatra), Constellation, or Rashi/Lagna, you MUST use this EXACT Markdown structure. 
+        
+        **CRITICAL ENHANCEMENT**: Below the "### 1. Introduction" header, you MUST include a **"🌌 Cosmic ID Card"** table or list that includes:
+        - **Traditional Name** (e.g. Spica)
+        - **Indian Name** (e.g. Chitta)
+        - **Bayer Designation** (e.g. Alpha Virginis)
+        - **Flamsteed Number** (e.g. 67 Virginis)
+        - **HR/HD Catalog ID** (e.g. HR 5056)
+        
+        You MUST also provide the [[CELESTIAL:TargetName]] trigger button immediately after this ID card.
+        
+        ### 1. Introduction
+        [Introduce the object, its sky position, and why it matters.]
+        
+        ### 2. Key Scientific Facts
+        [State distance, temperature, type, size, and astronomical boundaries.]
+        
+        ### 3. Interesting & Unique Features
+        [Detail any nebulae, clusters, or unique stellar mechanics.]
+        
+        ### 4. Cultural & Historical Significance
+        [Briefly mention name origin and ancient astronomical role.]
+        
+        ### 5. Life Cycle & Cosmic Future
+        [How was it born? How will it end?]
+        
+        ### 6. Importance to Modern Astronomy
+        [What do we learn by studying this object today?]
         """
 
     def generate_ical(self, date_str, time_str, location_name, title, lang):

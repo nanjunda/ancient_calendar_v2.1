@@ -61,7 +61,7 @@ Because the Lunar Sprinter is faster, it finishes its year in ~354 days (11 days
 Need help navigating the simulation? Or want to know more about a specific star?
 - **Floating Chat Widget**: Look for the ✨ icon in the bottom-right corner.
 - **Expert Guidance**: The **Maestro** is an AI science educator integrated directly into the app. You can ask him functional questions like *"Where do I find the Moons phases?"* or deep scientific questions like *"Why is Rahu called a ghost planet?"*
-- **App Support**: If you get stuck or a simulation isn't loading, the Maestro can guide you through the interface.
+- **Co-Pilot Mode**: When exploring the Insight Report, use the **"🔭 Open Sky Map"** buttons. This will launch a high-definition planetarium in a new window, guided by the Maestro's "Toast" notifications.
 
 ---
 

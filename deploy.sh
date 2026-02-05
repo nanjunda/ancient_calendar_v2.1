@@ -31,8 +31,10 @@ fi
 # 1. Install system dependencies
 echo "📦 Installing system dependencies..."
 if [ "$PKG_MGR" == "dnf" ]; then
+    # Install EPEL for broader package support (often needed for specific Python libs/system tools)
+    sudo dnf install -y epel-release
     sudo dnf install -y python3-pip python3-devel nginx git-core curl policycoreutils-python-utils openssl \
-        libX11 libXext libXrender freetype libpng rsync
+        libX11 libXext libXrender freetype libpng rsync tar
     sudo systemctl enable --now nginx
     
     # Allow Nginx network connect (Critical for 502 fix)

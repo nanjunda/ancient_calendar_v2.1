@@ -33,7 +33,7 @@ echo "📦 Installing system dependencies..."
 if [ "$PKG_MGR" == "dnf" ]; then
     # Install EPEL for broader package support (often needed for specific Python libs/system tools)
     sudo dnf install -y epel-release
-    sudo dnf install -y python3-pip python3-devel nginx git-core curl policycoreutils-python-utils openssl \
+    sudo dnf install -y python3-pip python3-devel python3-setuptools nginx git-core curl policycoreutils-python-utils openssl \
         libX11 libXext libXrender freetype libpng rsync tar
     sudo systemctl enable --now nginx
     
@@ -157,7 +157,17 @@ sudo systemctl restart $APP_NAME
 
 # 9. Configure Nginx
 echo "🌐 Configuring Nginx..."
-PUBLIC_IP=$(curl -s ifconfig.me || echo "localhost")
+
+# Robust IP Discovery (OCI Metadata -> Public API -> local)
+echo "🔍 Discovering Public IP for configuration..."
+PUBLIC_IP=$(curl -s -m 2 http://169.254.169.254/opc/v1/vnics/ | grep -oE '"publicIp":"[0-9.]+"' | cut -d'"' -f4 | head -n 1)
+
+if [ -z "$PUBLIC_IP" ]; then
+    PUBLIC_IP=$(curl -s -m 5 ifconfig.me || curl -s -m 5 icanhazip.com || echo "localhost")
+fi
+
+echo "   📍 Access IP: $PUBLIC_IP"
+
 sed -e "s|{{DOMAIN_OR_IP}}|$PUBLIC_IP|g" \
     -e "s|{{APP_PATH}}|$DEPLOY_DIR|g" \
     $DEPLOY_DIR/ancient_calendars.nginx.template | sudo tee $NGINX_CONF_DIR/$APP_NAME.conf > /dev/null

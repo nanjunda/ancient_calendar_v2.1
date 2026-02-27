@@ -118,9 +118,11 @@ def get_lagna(date_local, lat, lon, timezone_str):
     lst_rad = np.radians(lst * 15.0)
     eps_rad = np.radians(eps)
     
-    # tan(Asc) = -cos(LST) / (sin(LST)*cos(eps) + tan(lat)*sin(eps))
-    y = -np.cos(lst_rad)
-    x = (np.sin(lst_rad) * np.cos(eps_rad)) + (np.tan(lat_rad) * np.sin(eps_rad))
+    # Standard ascendant formula: Asc = atan2(cos(LST), -(sin(LST)*cos(eps) + tan(lat)*sin(eps)))
+    # FIX (2026-02-18): corrected sign convention — previous code had both y and x negated,
+    # which caused atan2 to return the descendant (western horizon) instead of the ascendant.
+    y = np.cos(lst_rad)
+    x = -(np.sin(lst_rad) * np.cos(eps_rad) + np.tan(lat_rad) * np.sin(eps_rad))
     
     asc_rad = np.arctan2(y, x)
     asc_deg_tropical = np.degrees(asc_rad)
